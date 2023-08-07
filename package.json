@@ -8,6 +8,8 @@
   "dependencies": {
     "@stripe/react-stripe-js": "2.1.1",
     "@stripe/stripe-js": "1.54.1",
+    "@vercel/analytics": "^1.0.1",
+    "analytics": "github:vercel/analytics",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",

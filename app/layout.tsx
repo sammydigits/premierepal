@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react";
+
 import type { Metadata } from "next";
 
 import Link from "next/link";
@@ -40,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps) {
           </header>
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );
