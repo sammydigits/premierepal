@@ -31,11 +31,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <title>Premiere Pal</title>
+      </head>
       <body>
         <header>
           <Link href="/">Premiere Pal</Link>
         </header>
-        {children}
+
+        <main>{children}</main>
         <Analytics />
       </body>
     </html>
