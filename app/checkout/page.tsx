@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Pay with Checkout | Premiere Pal",
 };
 
-export default function DonatePage(): JSX.Element {
+export default function CheckoutPage(): JSX.Element {
   return (
     <ul>
       <li>

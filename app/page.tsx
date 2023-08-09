@@ -1,23 +1,6 @@
-"use client";
-
-import type { Metadata } from "next";
-
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function IndexPage(): JSX.Element {
-  useEffect(() => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((registration) =>
-        console.log(
-          "Service Worker registration successful with scope: ",
-          registration.scope
-        )
-      )
-      .catch((err) => console.log("Service Worker registration failed: ", err));
-  }, []);
-
   return (
     <ul>
       <li>
