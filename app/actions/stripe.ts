@@ -12,21 +12,11 @@ import { stripe } from "@/lib/stripe";
 export async function createCheckoutSession(data: FormData): Promise<void> {
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create({
-      mode: "payment",
-      submit_type: "donate",
+      mode: "subscription",
       line_items: [
         {
           quantity: 1,
-          price_data: {
-            currency: CURRENCY,
-            product_data: {
-              name: "Custom amount donation",
-            },
-            unit_amount: formatAmountForStripe(
-              Number(data.get("customDonation") as string),
-              CURRENCY
-            ),
-          },
+          price: "price_1Nd4HNE8aLrdx6oVt2NLZhcY",
         },
       ],
       success_url: `${headers().get(

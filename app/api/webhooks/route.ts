@@ -29,8 +29,8 @@ export async function POST(req: Request) {
 
   const permittedEvents: string[] = [
     "checkout.session.completed",
-    "payment_intent.succeeded",
-    "payment_intent.payment_failed",
+    "invoice.paid",
+    "invoice.payment_failed",
   ];
 
   if (permittedEvents.includes(event.type)) {
@@ -39,16 +39,24 @@ export async function POST(req: Request) {
     try {
       switch (event.type) {
         case "checkout.session.completed":
+          // Payment is successful and the subscription is created.
+          // You should provision the subscription and save the customer ID to your database.
           data = event.data.object as Stripe.Checkout.Session;
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
-        case "payment_intent.payment_failed":
-          data = event.data.object as Stripe.PaymentIntent;
-          console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
+        case "invoice.paid":
+          // Continue to provision the subscription as payments continue to be made.
+          // Store the status in your database and check when a user accesses your service.
+          // This approach helps you avoid hitting rate limits.
+          data = event.data.object as Stripe.Invoice;
+          console.log(`💰 Invoice paid: ${data.status}`);
           break;
-        case "payment_intent.succeeded":
-          data = event.data.object as Stripe.PaymentIntent;
-          console.log(`💰 PaymentIntent status: ${data.status}`);
+        case "invoice.payment_failed":
+          // The payment failed or the customer does not have a valid payment method.
+          // The subscription becomes past_due. Notify your customer and send them to the
+          // customer portal to update their payment information.
+          data = event.data.object as Stripe.Invoice;
+          console.log(`❌ Invoice status: ${data.status}`);
           break;
         default:
           throw new Error(`Unhhandled event: ${event.type}`);

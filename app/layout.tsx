@@ -32,16 +32,10 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>
-        <div className="container">
-          <header>
-            <div className="header-content">
-              <Link href="/" className="logo">
-                Premiere Pal
-              </Link>
-            </div>
-          </header>
-          {children}
-        </div>
+        <header>
+          <Link href="/">Premiere Pal</Link>
+        </header>
+        {children}
         <Analytics />
       </body>
     </html>

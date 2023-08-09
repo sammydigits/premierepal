@@ -8,9 +8,10 @@ export const metadata: Metadata = {
 
 export default function DonatePage(): JSX.Element {
   return (
-    <div className="page-container">
-      <h1>Pay with Checkout</h1>
-      <CheckoutForm />
-    </div>
+    <ul>
+      <li>
+        <CheckoutForm />
+      </li>
+    </ul>
   );
 }

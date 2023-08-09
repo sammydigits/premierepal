@@ -8,11 +8,14 @@ export const metadata: Metadata = {
 
 export default function IndexPage(): JSX.Element {
   return (
-    <ul className="card-list">
+    <ul>
       <li>
-        <Link href="/checkout" className="card checkout-style-background">
-          <h2 className="bottom">Checkout</h2>
-        </Link>
+        <Link href="/checkout">Subscribe</Link>
+      </li>
+      <li>
+        <a href="https://billing.stripe.com/p/login/test_dR62968cu3J6aHK9AA">
+          Manage Subscription
+        </a>
       </li>
     </ul>
   );
