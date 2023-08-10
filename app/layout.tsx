@@ -1,3 +1,5 @@
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
+
 import { Analytics } from "@vercel/analytics/react";
 
 import type { Metadata } from "next";
@@ -30,19 +32,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <title>Premiere Pal</title>
-      </head>
-      <body>
-        <header>
-          <Link href="/">Premiere Pal</Link>
-        </header>
+    <ClerkProvider>
+      <html lang="en">
+        <head>
+          <link rel="manifest" href="/manifest.json" />
+          <title>Premiere Pal</title>
+        </head>
+        <body>
+          <header
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "20px",
+            }}
+          >
+            <Link href="/">Premiere Pal</Link>
+            <UserButton afterSignOutUrl="/" />
+          </header>
 
-        <main>{children}</main>
-        <Analytics />
-      </body>
-    </html>
+          <main>{children}</main>
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

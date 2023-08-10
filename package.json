@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.23.2",
     "@stripe/react-stripe-js": "2.1.1",
     "@stripe/stripe-js": "1.54.1",
     "@vercel/analytics": "^1.0.1",
