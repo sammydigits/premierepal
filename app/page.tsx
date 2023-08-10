@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs";
+import SearchForm from "./components/SearchForm";
 
 export default async function IndexPage(): Promise<JSX.Element> {
   const user = await currentUser();
   return (
     <>
-      <p className="text-3xl font-bold">
-        Hello {user ? user?.firstName : "unknown user"}
-      </p>
+      <p>Hello {user ? user?.firstName : "unknown user"}</p>
       <ul>
         <li>
           <Link href="/sign-up">Sign Up</Link>
@@ -27,6 +26,8 @@ export default async function IndexPage(): Promise<JSX.Element> {
           <Link href="/notifications">Notifications</Link>
         </li>
       </ul>
+
+      <SearchForm />
     </>
   );
 }

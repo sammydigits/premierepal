@@ -45,11 +45,19 @@ export default function RootLayout({ children }: LayoutProps) {
                 padding: "20px",
               }}
             >
-              <Link href="/">Premiere Pal</Link>
+              <Link href="/" className="text-3xl font-bold">
+                Premiere Pal
+              </Link>
               <UserButton afterSignOutUrl="/" />
             </header>
 
-            <main>{children}</main>
+            <main
+              style={{
+                padding: "20px",
+              }}
+            >
+              {children}
+            </main>
           </Providers>
           <Analytics />
         </body>
