@@ -1,16 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Tabs,
-  Tab,
-  Input,
-  Link,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-} from "@nextui-org/react";
+import { Tabs, Tab, Input, Button, Card, CardBody } from "@nextui-org/react";
 
 export default function SearchForm() {
   const [selected, setSelected] = React.useState("login");
@@ -21,7 +12,7 @@ export default function SearchForm() {
         <CardBody className="overflow-hidden">
           <Tabs
             fullWidth
-            size="md"
+            size="lg"
             aria-label="Tabs form"
             selectedKey={selected}
             onSelectionChange={setSelected}
@@ -40,12 +31,6 @@ export default function SearchForm() {
                   placeholder="Enter your password"
                   type="password"
                 />
-                <p className="text-center text-small">
-                  Need to create an account?{" "}
-                  <Link size="sm" onPress={() => setSelected("sign-up")}>
-                    Sign up
-                  </Link>
-                </p>
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
                     Login
@@ -73,12 +58,6 @@ export default function SearchForm() {
                   placeholder="Enter your password"
                   type="password"
                 />
-                <p className="text-center text-small">
-                  Already have an account?{" "}
-                  <Link size="sm" onPress={() => setSelected("login")}>
-                    Login
-                  </Link>
-                </p>
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
                     Sign up
@@ -95,12 +74,6 @@ export default function SearchForm() {
                   type="password"
                 />
 
-                <p className="text-center text-small">
-                  Already have an account?{" "}
-                  <Link size="sm" onPress={() => setSelected("login")}>
-                    Login
-                  </Link>
-                </p>
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
                     Sign up
