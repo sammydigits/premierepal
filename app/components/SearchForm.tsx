@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Tabs, Tab, Input, Button, Card, CardBody } from "@nextui-org/react";
 
 export default function SearchForm() {
-  const [selected, setSelected] = React.useState("login");
+  const [selected, setSelected] = useState<string | React.Key>("login");
 
   return (
     <div className="flex flex-col w-full">
@@ -15,7 +15,7 @@ export default function SearchForm() {
             size="lg"
             aria-label="Tabs form"
             selectedKey={selected}
-            onSelectionChange={setSelected}
+            onSelectionChange={(e) => setSelected(e)}
           >
             <Tab key="actor" title="Actors">
               <form className="flex flex-col gap-4">
