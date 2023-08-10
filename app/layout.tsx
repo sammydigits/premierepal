@@ -1,34 +1,32 @@
+import "../styles/globals.css";
+import { Metadata } from "next";
+import { Providers } from "./providers";
+
 import { ClerkProvider, UserButton } from "@clerk/nextjs";
-
 import { Analytics } from "@vercel/analytics/react";
-
-import type { Metadata } from "next";
 
 import Link from "next/link";
 
-import "../styles.css";
+export const metadata: Metadata = {
+  title: {
+    default: "Test",
+    template: `%s - Test 2`,
+  },
+  description: "Test Description",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+};
 
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-export const metadata: Metadata = {
-  title: {
-    default: "Premiere Pal",
-    template: "%s | Premiere Pal",
-  },
-  twitter: {
-    card: "summary_large_image",
-    description: "Premiere Pal",
-    images: [
-      {
-        url: "https://nextjs-typescript-react-stripe-js.vercel.app/social_card.png",
-      },
-    ],
-    site: "@PremierePal",
-    title: "Premiere Pal",
-  },
-};
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
@@ -39,18 +37,20 @@ export default function RootLayout({ children }: LayoutProps) {
           <title>Premiere Pal</title>
         </head>
         <body>
-          <header
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "20px",
-            }}
-          >
-            <Link href="/">Premiere Pal</Link>
-            <UserButton afterSignOutUrl="/" />
-          </header>
+          <Providers>
+            <header
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "20px",
+              }}
+            >
+              <Link href="/">Premiere Pal</Link>
+              <UserButton afterSignOutUrl="/" />
+            </header>
 
-          <main>{children}</main>
+            <main>{children}</main>
+          </Providers>
           <Analytics />
         </body>
       </html>

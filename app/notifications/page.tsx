@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@nextui-org/button";
 
 import { useEffect, useState } from "react";
 
@@ -117,32 +118,14 @@ export default function NotificationsPage(): JSX.Element {
         setStatus("permission not granted, cannot subscribe to push");
       }
     });
-
-    // const registration = await navigator.serviceWorker.ready;
-    // const subscription = await registration.pushManager.subscribe({
-    //   userVisibleOnly: true,
-    //   applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-    // });
-    // const response = await fetch("/api/subscribe", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(subscription),
-    // });
-    // if (response.ok) {
-    //   setStatus("Successfully subscribed");
-    // } else {
-    //   setStatus("Error subscribing user.");
-    // }
   };
 
   return (
     <ul>
       <li>Notifications</li>
       <li>
-        <button onClick={subscribe}>Subscribe to Notifications</button>
-        <button onClick={unsubscribe}>Unsubscribe from Notifications</button>
+        <Button onClick={subscribe}>Subscribe to Notifications</Button>
+        <Button onClick={unsubscribe}>Unsubscribe from Notifications</Button>
         <p>Status: {status}</p>
       </li>
     </ul>

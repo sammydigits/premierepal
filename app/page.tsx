@@ -5,7 +5,9 @@ export default async function IndexPage(): Promise<JSX.Element> {
   const user = await currentUser();
   return (
     <>
-      <p>Hello {user ? user?.firstName : "unknown user"}</p>
+      <p className="text-3xl font-bold">
+        Hello {user ? user?.firstName : "unknown user"}
+      </p>
       <ul>
         <li>
           <Link href="/sign-up">Sign Up</Link>
