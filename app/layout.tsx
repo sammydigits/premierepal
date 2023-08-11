@@ -2,7 +2,13 @@ import "../styles/globals.css";
 import { Metadata } from "next";
 import { Providers } from "./providers";
 
-import { ClerkProvider, UserButton } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
 import Link from "next/link";
@@ -52,7 +58,12 @@ export default function RootLayout({ children }: LayoutProps) {
                 Premiere Pal
               </Link>
 
-              <UserButton afterSignOutUrl="/" />
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
             </header>
 
             <main
