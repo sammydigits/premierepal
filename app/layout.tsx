@@ -6,6 +6,9 @@ import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
 import Link from "next/link";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -36,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps) {
           <link rel="manifest" href="/manifest.json" />
           <title>Premiere Pal</title>
         </head>
-        <body>
+        <body className={inter.className}>
           <Providers>
             <header
               style={{
