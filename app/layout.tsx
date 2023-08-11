@@ -6,7 +6,6 @@ import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
 import Link from "next/link";
-import { ThemeSwitcher } from "./components/ThemeSwitcher";
 
 export const metadata: Metadata = {
   title: {
@@ -49,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps) {
               <Link href="/" className="text-3xl font-bold">
                 Premiere Pal
               </Link>
-              <ThemeSwitcher />
+
               <UserButton afterSignOutUrl="/" />
             </header>
 

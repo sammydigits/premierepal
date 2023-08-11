@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function NotificationsPage(): JSX.Element {
   const [status, setStatus] = useState("Waiting for updates...");
+  const [switchesDisabled, setSwitchesDisabled] = useState(false);
   useEffect(() => {
     navigator.serviceWorker
       .register("/sw.js")
@@ -33,6 +34,7 @@ export default function NotificationsPage(): JSX.Element {
   }, []);
 
   const saveSubscription = async (subscription: any, method: string) => {
+    setSwitchesDisabled(true);
     setStatus("Sending to server...<br/>" + subscription);
     return fetch("https://backend.premierepal.com/saveSubscription.php", {
       method,
@@ -40,7 +42,10 @@ export default function NotificationsPage(): JSX.Element {
         "Content-Type": "application/json",
       },
       body: subscription,
-    }).then(() => subscription);
+    }).then(() => {
+      setSwitchesDisabled(true);
+      subscription;
+    });
   };
 
   const unsubscribe = async () => {
@@ -120,7 +125,15 @@ export default function NotificationsPage(): JSX.Element {
     });
   };
 
-  const handleEnableSubscription = (value: boolean) => {
+  const handleEmailNotifications = (value: boolean) => {
+    if (value) {
+      console.log("email notifications enabled");
+    } else {
+      console.log("email notifications disabled");
+    }
+  };
+
+  const handlePushNotifications = (value: boolean) => {
     if (value) {
       subscribe();
     } else {
@@ -128,14 +141,60 @@ export default function NotificationsPage(): JSX.Element {
     }
   };
 
+  const handleSMSNotifications = (value: boolean) => {
+    if (value) {
+      console.log("SMS notifications enabled");
+    } else {
+      console.log("SMS notifications disabled");
+    }
+  };
+
   return (
     <>
-      <h1>Notifications</h1>
-      <div className="flex flex-col w-full">
+      <h1>Manage your notifications</h1>
+
+      <div className="flex flex-col w-full mt-4">
         <Card className="max-w-full">
           <CardBody className="overflow-hidden">
             <Switch
-              onValueChange={handleEnableSubscription}
+              isDisabled={switchesDisabled}
+              defaultSelected
+              onValueChange={handleEmailNotifications}
+              classNames={{
+                base: cn(
+                  "inline-flex flex-row-reverse w-full max-w-md bg-content1 hover:bg-content2 items-center",
+                  "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
+                  "data-[selected=true]:border-primary"
+                ),
+                wrapper: "p-0 h-4 overflow-visible",
+                thumb: cn(
+                  "w-6 h-6 border-2 shadow-lg",
+                  "group-data-[hover=true]:border-primary",
+                  //selected
+                  "group-data-[selected=true]:ml-6",
+                  // pressed
+                  "group-data-[pressed=true]:w-7",
+                  "group-data-[selected]:group-data-[pressed]:ml-4"
+                ),
+              }}
+            >
+              <div className="flex flex-col gap-1">
+                <p className="text-medium">Enable email notifications</p>
+                <p className="text-tiny text-default-400">
+                  Get notifcations via email.
+                </p>
+              </div>
+            </Switch>
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="flex flex-col w-full mt-4">
+        <Card className="max-w-full">
+          <CardBody className="overflow-hidden">
+            <Switch
+              isDisabled={switchesDisabled}
+              onValueChange={handlePushNotifications}
               classNames={{
                 base: cn(
                   "inline-flex flex-row-reverse w-full max-w-md bg-content1 hover:bg-content2 items-center",
@@ -161,6 +220,41 @@ export default function NotificationsPage(): JSX.Element {
                   phone to get notifications on your phone.
                 </p>
                 <p className="text-tiny text-default-400">Status: {status}</p>
+              </div>
+            </Switch>
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="flex flex-col w-full mt-4">
+        <Card className="max-w-full">
+          <CardBody className="overflow-hidden">
+            <Switch
+              isDisabled={switchesDisabled}
+              onValueChange={handleSMSNotifications}
+              classNames={{
+                base: cn(
+                  "inline-flex flex-row-reverse w-full max-w-md bg-content1 hover:bg-content2 items-center",
+                  "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
+                  "data-[selected=true]:border-primary"
+                ),
+                wrapper: "p-0 h-4 overflow-visible",
+                thumb: cn(
+                  "w-6 h-6 border-2 shadow-lg",
+                  "group-data-[hover=true]:border-primary",
+                  //selected
+                  "group-data-[selected=true]:ml-6",
+                  // pressed
+                  "group-data-[pressed=true]:w-7",
+                  "group-data-[selected]:group-data-[pressed]:ml-4"
+                ),
+              }}
+            >
+              <div className="flex flex-col gap-1">
+                <p className="text-medium">Enable SMS notifications</p>
+                <p className="text-tiny text-default-400">
+                  Get notifcations via text message.
+                </p>
               </div>
             </Switch>
           </CardBody>

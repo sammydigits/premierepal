@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Tabs, Tab, Input, Button, Card, CardBody } from "@nextui-org/react";
+import { Tabs, Tab, Textarea, Button, Card, CardBody } from "@nextui-org/react";
 
 export default function SearchForm() {
   const [selected, setSelected] = useState<string | React.Key>("login");
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mt-12">
       <Card className="max-w-full w-[440px] h-[400px]">
         <CardBody className="overflow-hidden">
           <Tabs
@@ -19,64 +19,43 @@ export default function SearchForm() {
           >
             <Tab key="actor" title="Actors">
               <form className="flex flex-col gap-4">
-                <Input
-                  isRequired
-                  label="Email"
-                  placeholder="Enter your email"
-                  type="email"
-                />
-                <Input
-                  isRequired
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
+                <Textarea
+                  label="Type actor names:"
+                  labelPlacement="outside"
+                  placeholder=""
                 />
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
-                    Login
+                    Search
                   </Button>
                 </div>
               </form>
             </Tab>
             <Tab key="director" title="Directors">
               <form className="flex flex-col gap-4 h-[300px]">
-                <Input
-                  isRequired
-                  label="Name"
-                  placeholder="Enter your name"
-                  type="password"
-                />
-                <Input
-                  isRequired
-                  label="Email"
-                  placeholder="Enter your email"
-                  type="email"
-                />
-                <Input
-                  isRequired
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
+                <Textarea
+                  label="Type director names:"
+                  labelPlacement="outside"
+                  placeholder=""
                 />
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
-                    Sign up
+                    Search
                   </Button>
                 </div>
               </form>
             </Tab>
             <Tab key="tv" title="TV Shows">
               <form className="flex flex-col gap-4 h-[300px]">
-                <Input
-                  isRequired
-                  label="Name"
-                  placeholder="Enter your name"
-                  type="password"
+                <Textarea
+                  label="Type TV show names:"
+                  labelPlacement="outside"
+                  placeholder=""
                 />
 
                 <div className="flex gap-2 justify-end">
                   <Button fullWidth color="primary">
-                    Sign up
+                    Search
                   </Button>
                 </div>
               </form>
