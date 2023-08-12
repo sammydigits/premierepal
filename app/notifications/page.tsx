@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 
 export default function NotificationsPage(): JSX.Element {
   const [status, setStatus] = useState("Waiting for updates...");
-  const [switchesDisabled, setSwitchesDisabled] = useState(false);
+  const [notificationsSwitchDisabled, setNotificationsSwitchDisabled] =
+    useState(false);
   useEffect(() => {
     navigator.serviceWorker
       .register("/sw.js")
@@ -18,32 +19,32 @@ export default function NotificationsPage(): JSX.Element {
       .catch((err) => console.log("Service Worker registration failed: ", err));
 
     if (!("serviceWorker" in navigator)) {
-      setStatus("Service workers are not supported by this browser");
+      setStatus("❌ Service workers are not supported by this browser");
       return;
     }
 
     if (!("PushManager" in window)) {
-      setStatus("Push notifications are not supported by this browser");
+      setStatus("❌ Push notifications are not supported by this browser");
       return;
     }
 
     if (!("showNotification" in ServiceWorkerRegistration.prototype)) {
-      setStatus("Notifications are not supported by this browser");
+      setStatus("❌ Notifications are not supported by this browser");
       return;
     }
   }, []);
 
   const saveSubscription = async (subscription: any, method: string) => {
-    setSwitchesDisabled(true);
-    setStatus("Sending to server...<br/>" + subscription);
-    return fetch("https://backend.premierepal.com/saveSubscription.php", {
+    setNotificationsSwitchDisabled(true);
+    setStatus("Sending to server...");
+    return fetch("/api/notifications", {
       method,
       headers: {
         "Content-Type": "application/json",
       },
       body: subscription,
     }).then(() => {
-      setSwitchesDisabled(true);
+      setNotificationsSwitchDisabled(false);
       subscription;
     });
   };
@@ -54,9 +55,9 @@ export default function NotificationsPage(): JSX.Element {
       sw.pushManager.getSubscription().then((subscription) => {
         if (subscription) {
           subscription.unsubscribe();
-          setStatus("Unsubscribed");
+          setStatus("✅ Unsubscribed");
         } else {
-          setStatus("no subscription to unsubscribe from");
+          setStatus("❌ No subscription to unsubscribe from");
         }
       });
     });
@@ -71,9 +72,7 @@ export default function NotificationsPage(): JSX.Element {
           sw.pushManager.getSubscription().then((subscription) => {
             if (subscription) {
               setStatus(
-                `you already have subscribed to push, your subscription is: ${JSON.stringify(
-                  subscription
-                )}`
+                `✅ you already have subscribed to push, your subscription`
               );
 
               // subscription.unsubscribe();
@@ -87,9 +86,7 @@ export default function NotificationsPage(): JSX.Element {
                     process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
                 })
                 .then((subscription) => {
-                  setStatus(
-                    "obtained subscription: " + JSON.stringify(subscription)
-                  );
+                  setStatus("✅ obtained subscription");
                   return subscription;
                 })
                 .then((subscription) => {
@@ -97,9 +94,7 @@ export default function NotificationsPage(): JSX.Element {
                   return saveSubscription(JSON.stringify(subscription), "POST");
                 })
                 .then((subscription) => {
-                  setStatus(
-                    "saved subscription to db: " + JSON.stringify(subscription)
-                  );
+                  setStatus("✅ saved subscription to db");
                 })
                 .catch((e) => {
                   if (Notification.permission === "denied") {
@@ -107,12 +102,12 @@ export default function NotificationsPage(): JSX.Element {
                     // means we failed to subscribe and the user will need
                     // to manually change the notification permission to
                     // subscribe to push messages
-                    setStatus("Notifications are denied by the user.");
+                    setStatus("❌ Notifications are denied by the user.");
                   } else {
                     // A problem occurred with the subscription; common reasons
                     // include network errors or the user skipped the permission
                     setStatus(
-                      "Impossible to subscribe to push notifications:" + e
+                      "❌ Impossible to subscribe to push notifications:" + e
                     );
                   }
                 });
@@ -120,7 +115,7 @@ export default function NotificationsPage(): JSX.Element {
           });
         });
       } else {
-        setStatus("permission not granted, cannot subscribe to push");
+        setStatus("❌ permission not granted, cannot subscribe to push");
       }
     });
   };
@@ -157,7 +152,6 @@ export default function NotificationsPage(): JSX.Element {
         <Card className="max-w-full">
           <CardBody className="overflow-hidden">
             <Switch
-              isDisabled={switchesDisabled}
               defaultSelected
               onValueChange={handleEmailNotifications}
               classNames={{
@@ -181,7 +175,8 @@ export default function NotificationsPage(): JSX.Element {
               <div className="flex flex-col gap-1">
                 <p className="text-medium">Enable email notifications</p>
                 <p className="text-tiny text-default-400">
-                  Get notifcations via email.
+                  Get notifcations via email. Manage your email address in your
+                  account.
                 </p>
               </div>
             </Switch>
@@ -193,7 +188,7 @@ export default function NotificationsPage(): JSX.Element {
         <Card className="max-w-full">
           <CardBody className="overflow-hidden">
             <Switch
-              isDisabled={switchesDisabled}
+              isDisabled={notificationsSwitchDisabled}
               onValueChange={handlePushNotifications}
               classNames={{
                 base: cn(
@@ -230,7 +225,6 @@ export default function NotificationsPage(): JSX.Element {
         <Card className="max-w-full">
           <CardBody className="overflow-hidden">
             <Switch
-              isDisabled={switchesDisabled}
               onValueChange={handleSMSNotifications}
               classNames={{
                 base: cn(
