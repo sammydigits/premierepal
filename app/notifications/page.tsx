@@ -72,7 +72,7 @@ export default function NotificationsPage(): JSX.Element {
           sw.pushManager.getSubscription().then((subscription) => {
             if (subscription) {
               setStatus(
-                `✅ you already have subscribed to push, your subscription`
+                `✅ you already have subscribed to push, but your subscription might not be in our database, what should we do?.`
               );
 
               // subscription.unsubscribe();
