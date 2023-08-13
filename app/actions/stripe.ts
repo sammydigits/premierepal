@@ -7,10 +7,16 @@ import { headers } from "next/headers";
 
 import { stripe } from "@/lib/stripe";
 
+import { currentUser } from "@clerk/nextjs";
+
 export async function createCheckoutSession(data: FormData): Promise<void> {
+  const user = await currentUser();
+
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create({
       mode: "subscription",
+      client_reference_id: user?.id,
+      customer_email: user?.emailAddresses[0].emailAddress,
       line_items: [
         {
           quantity: 1,
