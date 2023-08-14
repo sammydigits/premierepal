@@ -1,5 +1,5 @@
 "use client";
-import { Switch, Button, cn, Card, CardBody } from "@nextui-org/react";
+import { Switch, cn, Card, CardBody } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
 

@@ -2,17 +2,11 @@ import "../styles/globals.css";
 import { Metadata } from "next";
 import { Providers } from "./providers";
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
-import Link from "next/link";
 import { Inter } from "next/font/google";
+import Navigation from "./components/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,26 +42,7 @@ export default function RootLayout({ children }: LayoutProps) {
         </head>
         <body className={inter.className}>
           <Providers>
-            <header className="bg-white">
-              <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-                <div className="flex lg:flex-1">
-                  <Link
-                    href="/"
-                    className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-                  >
-                    🎬 Premiere Pal
-                  </Link>
-                </div>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                  <SignedIn>
-                    <UserButton afterSignOutUrl="/" />
-                  </SignedIn>
-                  <SignedOut>
-                    <SignInButton />
-                  </SignedOut>
-                </div>
-              </nav>
-            </header>
+            <Navigation />
 
             <main>{children}</main>
 
