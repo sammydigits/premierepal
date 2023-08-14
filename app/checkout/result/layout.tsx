@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Checkout Session Result",
+  title: "Premiere Pal | Thanks",
 };
 
 export default function ResultLayout({
@@ -9,10 +9,5 @@ export default function ResultLayout({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return (
-    <div>
-      <h1>Checkout Session Result</h1>
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }

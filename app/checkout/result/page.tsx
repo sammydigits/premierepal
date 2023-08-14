@@ -2,6 +2,7 @@ import type { Stripe } from "stripe";
 
 import PrintObject from "@/components/PrintObject";
 import { stripe } from "@/lib/stripe";
+import Link from "next/link";
 
 export default async function ResultPage({
   searchParams,
@@ -16,9 +17,18 @@ export default async function ResultPage({
 
   return (
     <>
-      <h2>Status: {checkoutSession.status}</h2>
-      <h3>Checkout Session response:</h3>
-      <PrintObject content={checkoutSession} />
+      {checkoutSession.status === "complete" && (
+        <div>
+          <h1>Thank you for subscribing</h1>
+          <p>
+            Now go{" "}
+            <Link href="/notifications">set your notification preferences</Link>
+            .
+          </p>
+        </div>
+      )}
+      {/* <h3>Checkout Session response:</h3> */}
+      {/* <PrintObject content={checkoutSession} /> */}
     </>
   );
 }
