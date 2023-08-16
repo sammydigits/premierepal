@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Tabs, Tab, Textarea, Button, Card, CardBody } from "@nextui-org/react";
+import { Tabs, Tab, Button, Card, CardBody } from "@nextui-org/react";
+import SearchAutocomplete from "./SearchAutocomplete";
 
 export default function SearchForm() {
   const [selected, setSelected] = useState<string | React.Key>("login");
@@ -20,12 +21,7 @@ export default function SearchForm() {
           >
             <Tab key="actor" title="Actors">
               <form className="flex flex-col gap-4">
-                <Textarea
-                  label="Type actor names:"
-                  labelPlacement="outside"
-                  placeholder=""
-                  minRows={7}
-                />
+                <SearchAutocomplete type="actors" />
                 <div className="flex gap-2 justify-end">
                   <Button
                     fullWidth
@@ -40,12 +36,7 @@ export default function SearchForm() {
             </Tab>
             <Tab key="director" title="Directors">
               <form className="flex flex-col gap-4">
-                <Textarea
-                  label="Type director names:"
-                  labelPlacement="outside"
-                  placeholder=""
-                  minRows={7}
-                />
+                <SearchAutocomplete type="directors" />
                 <div className="flex gap-2 justify-end">
                   <Button
                     fullWidth
@@ -60,13 +51,7 @@ export default function SearchForm() {
             </Tab>
             <Tab key="tv" title="TV Shows">
               <form className="flex flex-col gap-4">
-                <Textarea
-                  label="Type TV show names:"
-                  labelPlacement="outside"
-                  placeholder=""
-                  minRows={7}
-                />
-
+                <SearchAutocomplete type="tv" />
                 <div className="flex gap-2 justify-end">
                   <Button
                     fullWidth
