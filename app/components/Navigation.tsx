@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Dialog, Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import UserAvatar from "./UserAvatar";
 
-export default function Navigation() {
+interface NavigationProps {
+  user: any;
+}
+
+export default function Navigation({ user }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -53,7 +57,7 @@ export default function Navigation() {
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <SignedIn>
-            <UserAvatar />
+            <UserAvatar user={user} />
           </SignedIn>
           <SignedOut>
             <SignInButton>Sign in &rarr;</SignInButton>
@@ -70,8 +74,7 @@ export default function Navigation() {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Premiere Pal</span>
-              🎬
+              🎬 Premiere Pal
             </Link>
             <button
               type="button"
@@ -87,18 +90,21 @@ export default function Navigation() {
               <div className="space-y-2 py-6">
                 <Link
                   href="/#features"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Features
                 </Link>
                 <Link
                   href="/#about"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   About
                 </Link>
                 <Link
                   href="/#pricing"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Pricing
@@ -106,11 +112,7 @@ export default function Navigation() {
               </div>
               <div className="py-6">
                 <SignedIn>
-                  <UserButton
-                    afterSignOutUrl="/"
-                    userProfileMode="navigation"
-                    userProfileUrl={"/account"}
-                  />
+                  <UserAvatar user={user} />
                 </SignedIn>
                 <SignedOut>
                   <SignInButton>Sign in &rarr;</SignInButton>

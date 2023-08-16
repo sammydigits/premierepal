@@ -4,12 +4,18 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button,
   Avatar,
-  User,
 } from "@nextui-org/react";
+import Link from "next/link";
+import { useClerk } from "@clerk/clerk-react";
 
-export default function UserAvatar() {
+interface UserAvatarProps {
+  user: any;
+}
+
+export default function UserAvatar({ user }: UserAvatarProps) {
+  const { signOut } = useClerk();
+
   return (
     <div className="flex items-center gap-4">
       <Dropdown placement="bottom-end">
@@ -18,21 +24,27 @@ export default function UserAvatar() {
             isBordered
             as="button"
             className="transition-transform"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            src={user.profileImageUrl}
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">Signed in as</p>
-            <p className="font-semibold">zoey@example.com</p>
+            <p className="font-semibold">{user.email}</p>
           </DropdownItem>
-          <DropdownItem key="account">My Account</DropdownItem>
-          <DropdownItem key="team_settings">Team Settings</DropdownItem>
-          <DropdownItem key="analytics">Analytics</DropdownItem>
-          <DropdownItem key="system">System</DropdownItem>
-          <DropdownItem key="configurations">Configurations</DropdownItem>
-          <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-          <DropdownItem key="logout" color="danger">
+          <DropdownItem key="account">
+            <Link href="/account">My Account</Link>
+          </DropdownItem>
+          <DropdownItem key="notifications">
+            <Link href="/notifications">Notifications</Link>
+          </DropdownItem>
+          <DropdownItem key="analytics">
+            <Link href="/billing">Billing</Link>
+          </DropdownItem>
+          <DropdownItem key="support">
+            <Link href="/support">Support</Link>
+          </DropdownItem>
+          <DropdownItem key="logout" color="danger" onClick={() => signOut()}>
             Log Out
           </DropdownItem>
         </DropdownMenu>

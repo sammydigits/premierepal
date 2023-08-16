@@ -39,7 +39,7 @@ export default async function IndexPage(): Promise<JSX.Element> {
                 movies, and your favorite TV shows get new seasons.
               </p>
 
-              <p className="mt-2 leading-7 text-gray-400">
+              <p className="mt-2 mb-6 leading-7 text-gray-400">
                 Track all your favorites for only $0.99/month
               </p>
             </div>
@@ -55,23 +55,6 @@ export default async function IndexPage(): Promise<JSX.Element> {
       <Pricing />
 
       <About />
-
-      <ul>
-        <li>
-          <Link href="/sign-up">Sign Up</Link>
-        </li>
-        <li>
-          <Link href="/checkout">Checkout</Link>
-        </li>
-        <li>
-          <a href="https://billing.stripe.com/p/login/test_dR62968cu3J6aHK9AA">
-            Manage Billing
-          </a>
-        </li>
-        <li>
-          <Link href="/notifications">Manage Notifications</Link>
-        </li>
-      </ul>
     </>
   );
 }

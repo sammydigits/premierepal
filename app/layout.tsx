@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import { Metadata } from "next";
 import { Providers } from "./providers";
 
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 
 import { Inter } from "next/font/google";
@@ -31,8 +31,16 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: LayoutProps) {
+export default async function RootLayout({ children }: LayoutProps) {
   const currentYear = new Date().getFullYear();
+  const user = await currentUser();
+  const userData = {
+    id: user?.id,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.emailAddresses[0].emailAddress,
+    profileImageUrl: user?.imageUrl,
+  };
   return (
     <ClerkProvider>
       <html lang="en">
@@ -42,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps) {
         </head>
         <body className={inter.className}>
           <Providers>
-            <Navigation />
+            <Navigation user={userData} />
 
             <main>{children}</main>
 

@@ -7,7 +7,7 @@ export default function SearchForm() {
   const [selected, setSelected] = useState<string | React.Key>("login");
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mb-6">
       <Card className="max-w-full w-[450px] h-[350px]">
         <CardBody className="overflow-hidden">
           <Tabs
