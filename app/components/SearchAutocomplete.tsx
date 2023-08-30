@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { ReactTags } from "react-tag-autocomplete";
-import { Tabs, Tab, Button } from "@nextui-org/react";
+import { Tabs, Tab, Button, User } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 function debounce(
@@ -61,25 +61,28 @@ export default function SearchAutocomplete() {
   const [isBusy, setIsBusy] = useState(false);
   const [type, setType] = useState("A");
   const [personOrTV, setPersonOrTV] = useState("person");
+  const [reviewMode, setReviewMode] = useState(false);
   const [selected, setSelected] = useState([
     { value: "A_1245", label: "Scarlett Johansson" },
     { value: "A_5292", label: "Denzel Washington" },
     { value: "A_6193", label: "Leonardo DiCaprio" },
     { value: "D_1245", label: "Quentin Tarantino" },
     { value: "T_1245", label: "Lupin" },
-    { value: "T_1244", label: "Lupin2" },
-    { value: "T_1246", label: "Lupin3" },
     { value: "T_124834", label: "Heartstopper" },
   ]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const router = useRouter();
+  //   const router = useRouter();
 
   // function to save selections and redirect to /sign-up
-  const handleSaveSelections = () => {
-    console.log("Saving selections...");
-    //redirect to /sign-up
-    router.push("/notifications");
+  //   const handleSaveSelections = () => {
+  //     console.log("Saving selections...");
+  //     //redirect to /sign-up
+  //     router.push("/notifications");
+  //   };
+
+  const handleSetReviewMode = () => {
+    setReviewMode(true);
   };
 
   const onAdd = useCallback(
@@ -149,21 +152,23 @@ export default function SearchAutocomplete() {
 
   return (
     <>
-      <Tabs
-        fullWidth
-        size="lg"
-        aria-label="Tabs form"
-        selectedKey={type}
-        onSelectionChange={(type) => handleTypeChange(type)}
-        color="default"
-        className="mb-5"
-      >
-        <Tab key="A" title="Actors" />
-        <Tab key="D" title="Directors" />
-        <Tab key="T" title="TV Shows" />
-      </Tabs>
+      {!reviewMode && (
+        <Tabs
+          fullWidth
+          size="lg"
+          aria-label="Tabs form"
+          selectedKey={type}
+          onSelectionChange={(type) => handleTypeChange(type)}
+          color="default"
+          className="mb-5"
+        >
+          <Tab key="A" title="Actors" />
+          <Tab key="D" title="Directors" />
+          <Tab key="T" title="TV Shows" />
+        </Tabs>
+      )}
 
-      {type === "A" && (
+      {type === "A" && !reviewMode && (
         <>
           <ReactTags
             ariaDescribedBy="actors"
@@ -190,7 +195,7 @@ export default function SearchAutocomplete() {
         </>
       )}
 
-      {type === "D" && (
+      {type === "D" && !reviewMode && (
         <>
           <ReactTags
             ariaDescribedBy="directors"
@@ -217,7 +222,7 @@ export default function SearchAutocomplete() {
         </>
       )}
 
-      {type === "T" && (
+      {type === "T" && !reviewMode && (
         <>
           <ReactTags
             ariaDescribedBy="tv shows"
@@ -238,9 +243,38 @@ export default function SearchAutocomplete() {
             fullWidth
             color="primary"
             className="flex-none mt-5 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            onClick={handleSaveSelections}
+            onClick={handleSetReviewMode}
           >
-            Notify me about these selections
+            Review my selections
+          </Button>
+        </>
+      )}
+      {reviewMode && (
+        <>
+          <p className="text-base font-semibold leading-7 text-indigo-600">
+            Get notified about your selection for $0.99/month.
+          </p>
+          <p className="text-gray-400">Add more any time for no extra cost.</p>
+          {selected.map((item) => {
+            return (
+              <div key={item.value}>
+                <User
+                  name={item.label}
+                  description={item.value}
+                  avatarProps={{
+                    src: "https://image.tmdb.org/t/p/w45/1k9MVNS9M3Y4KejBHusNdbGJwRw.jpg",
+                  }}
+                />
+              </div>
+            );
+          })}
+          <Button
+            fullWidth
+            color="primary"
+            className="flex-none mt-5 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            onClick={handleSetReviewMode}
+          >
+            Sign up
           </Button>
         </>
       )}
