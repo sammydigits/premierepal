@@ -5,6 +5,13 @@ import { ReactTags } from "react-tag-autocomplete";
 import { Tabs, Tab, Button, User } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
+function prepareImage(image: string) {
+  if (image) {
+    return image.replace("/", "");
+  }
+  return "";
+}
+
 function debounce(
   fn: { (value: any): Promise<void>; (arg0: any): void },
   delay = 100
@@ -12,8 +19,9 @@ function debounce(
   let timeoutID: string | number | NodeJS.Timeout | undefined;
 
   return function (...args: any) {
+    const newArgs = [...args];
     clearTimeout(timeoutID);
-    timeoutID = setTimeout(() => fn(...args), delay);
+    timeoutID = setTimeout(() => fn(newArgs), delay);
   };
 }
 
@@ -39,15 +47,21 @@ async function fetchData(
             (item: { known_for_department: string }) =>
               item.known_for_department === department
           )
-          .map((item: { id: any; name: any }) => ({
-            value: `${departmentAbbreviation}_${item.id}`,
+          .map((item: { id: any; name: any; profile_path: any }) => ({
+            value: `${departmentAbbreviation}_${prepareImage(
+              item.profile_path
+            )}_${item.id}`,
             label: item.name,
           }));
       }
-      return data.results.map((item: { id: any; name: any }) => ({
-        value: `${departmentAbbreviation}_${item.id}`,
-        label: item.name,
-      }));
+      return data.results.map(
+        (item: { id: any; name: any; poster_path: any }) => ({
+          value: `${departmentAbbreviation}_${prepareImage(item.poster_path)}_${
+            item.id
+          }`,
+          label: item.name,
+        })
+      );
     } else {
       throw Error(`The API returned a ${response.status}`);
     }
@@ -63,12 +77,27 @@ export default function SearchAutocomplete() {
   const [personOrTV, setPersonOrTV] = useState("person");
   const [reviewMode, setReviewMode] = useState(false);
   const [selected, setSelected] = useState([
-    { value: "A_1245", label: "Scarlett Johansson" },
-    { value: "A_5292", label: "Denzel Washington" },
-    { value: "A_6193", label: "Leonardo DiCaprio" },
-    { value: "D_1245", label: "Quentin Tarantino" },
-    { value: "T_1245", label: "Lupin" },
-    { value: "T_124834", label: "Heartstopper" },
+    {
+      value: "A_zmvK1jJ6UZpAAeMMgdEOWir0kQN.jpg_1245",
+      label: "Scarlett Johansson",
+    },
+    {
+      value: "A_jj2Gcobpopokal0YstuCQW0ldJ4.jpg_5292",
+      label: "Denzel Washington",
+    },
+    {
+      value: "A_wo2hJpn04vbtmh0B9utCFdsQhxM.jpg_6193",
+      label: "Leonardo DiCaprio",
+    },
+    {
+      value: "D_1gjcpAa99FAOWGnrUvHEXXsRs7o.jpg_1245",
+      label: "Quentin Tarantino",
+    },
+    { value: "T_l220jMmURQUTzgkFuf6u8YpYs84.jpg_1245", label: "Lupin" },
+    {
+      value: "T_p0AtD0ivSlHq2MHY6JFgyhNqAQY.jpg_124834",
+      label: "Heartstopper",
+    },
   ]);
   const [suggestions, setSuggestions] = useState([]);
 
@@ -170,20 +199,22 @@ export default function SearchAutocomplete() {
 
       {type === "A" && !reviewMode && (
         <>
-          <ReactTags
-            ariaDescribedBy="actors"
-            id="actors"
-            labelText="Select actors"
-            noOptionsText={noOptionsText}
-            onAdd={onAdd}
-            onDelete={onDelete}
-            onInput={onInput}
-            placeholderText="Start typing actor names..."
-            selected={selected.filter(
-              (item) => item.value.split("_")[0] === "A"
-            )}
-            suggestions={suggestions}
-          />
+          <div className="h-full">
+            <ReactTags
+              ariaDescribedBy="actors"
+              id="actors"
+              labelText="Select actors"
+              noOptionsText={noOptionsText}
+              onAdd={onAdd}
+              onDelete={onDelete}
+              onInput={onInput}
+              placeholderText="Start typing actor names..."
+              selected={selected.filter(
+                (item) => item.value.split("_")[0] === "A"
+              )}
+              suggestions={suggestions}
+            />
+          </div>
           <Button
             fullWidth
             color="primary"
@@ -197,20 +228,22 @@ export default function SearchAutocomplete() {
 
       {type === "D" && !reviewMode && (
         <>
-          <ReactTags
-            ariaDescribedBy="directors"
-            id="directors"
-            labelText="Select directors"
-            noOptionsText={noOptionsText}
-            onAdd={onAdd}
-            onDelete={onDelete}
-            onInput={onInput}
-            placeholderText="Start typing director names..."
-            selected={selected.filter(
-              (item) => item.value.split("_")[0] === "D"
-            )}
-            suggestions={suggestions}
-          />
+          <div className="h-full">
+            <ReactTags
+              ariaDescribedBy="directors"
+              id="directors"
+              labelText="Select directors"
+              noOptionsText={noOptionsText}
+              onAdd={onAdd}
+              onDelete={onDelete}
+              onInput={onInput}
+              placeholderText="Start typing director names..."
+              selected={selected.filter(
+                (item) => item.value.split("_")[0] === "D"
+              )}
+              suggestions={suggestions}
+            />
+          </div>
           <Button
             fullWidth
             color="primary"
@@ -224,21 +257,22 @@ export default function SearchAutocomplete() {
 
       {type === "T" && !reviewMode && (
         <>
-          <ReactTags
-            ariaDescribedBy="tv shows"
-            id="tv shows"
-            labelText="Select TV Shows"
-            noOptionsText={noTVOptionsText}
-            onAdd={onAdd}
-            onDelete={onDelete}
-            onInput={onInput}
-            placeholderText="Start typing TV show names..."
-            selected={selected.filter(
-              (item) => item.value.split("_")[0] === "T"
-            )}
-            suggestions={suggestions}
-          />
-
+          <div className="h-full">
+            <ReactTags
+              ariaDescribedBy="tv shows"
+              id="tv shows"
+              labelText="Select TV Shows"
+              noOptionsText={noTVOptionsText}
+              onAdd={onAdd}
+              onDelete={onDelete}
+              onInput={onInput}
+              placeholderText="Start typing TV show names..."
+              selected={selected.filter(
+                (item) => item.value.split("_")[0] === "T"
+              )}
+              suggestions={suggestions}
+            />
+          </div>
           <Button
             fullWidth
             color="primary"
@@ -251,23 +285,29 @@ export default function SearchAutocomplete() {
       )}
       {reviewMode && (
         <>
-          <p className="text-base font-semibold leading-7 text-indigo-600">
-            Get notified about your selection for $0.99/month.
+          <p className="text-base font-semibold leading-7 text-indigo-600 text-center">
+            Get notified about your selection for $0.99/month
           </p>
-          <p className="text-gray-400">Add more any time for no extra cost.</p>
-          {selected.map((item) => {
-            return (
-              <div key={item.value}>
-                <User
-                  name={item.label}
-                  description={item.value}
-                  avatarProps={{
-                    src: "https://image.tmdb.org/t/p/w45/1k9MVNS9M3Y4KejBHusNdbGJwRw.jpg",
-                  }}
-                />
-              </div>
-            );
-          })}
+          <p className="text-gray-400 text-center">
+            Add more any time for no extra cost
+          </p>
+          <div className="overflow-scroll h-full">
+            <ul className="user-selections mt-5">
+              {selected.map((item) => {
+                const image = item.value.split("_")[1];
+                return (
+                  <li key={item.value} className="mb-3">
+                    <User
+                      name={item.label}
+                      avatarProps={{
+                        src: `https://image.tmdb.org/t/p/w45/${image}`,
+                      }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
           <Button
             fullWidth
             color="primary"
