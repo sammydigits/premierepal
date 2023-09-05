@@ -199,22 +199,21 @@ export default function SearchAutocomplete() {
 
       {type === "A" && !reviewMode && (
         <>
-          <div className="h-full">
-            <ReactTags
-              ariaDescribedBy="actors"
-              id="actors"
-              labelText="Select actors"
-              noOptionsText={noOptionsText}
-              onAdd={onAdd}
-              onDelete={onDelete}
-              onInput={onInput}
-              placeholderText="Start typing actor names..."
-              selected={selected.filter(
-                (item) => item.value.split("_")[0] === "A"
-              )}
-              suggestions={suggestions}
-            />
-          </div>
+          <ReactTags
+            ariaDescribedBy="actors"
+            id="actors"
+            labelText="Select actors"
+            noOptionsText={noOptionsText}
+            onAdd={onAdd}
+            onDelete={onDelete}
+            onInput={onInput}
+            placeholderText="Start typing actor names..."
+            selected={selected.filter(
+              (item) => item.value.split("_")[0] === "A"
+            )}
+            suggestions={suggestions}
+          />
+
           <Button
             fullWidth
             color="primary"
@@ -228,22 +227,21 @@ export default function SearchAutocomplete() {
 
       {type === "D" && !reviewMode && (
         <>
-          <div className="h-full">
-            <ReactTags
-              ariaDescribedBy="directors"
-              id="directors"
-              labelText="Select directors"
-              noOptionsText={noOptionsText}
-              onAdd={onAdd}
-              onDelete={onDelete}
-              onInput={onInput}
-              placeholderText="Start typing director names..."
-              selected={selected.filter(
-                (item) => item.value.split("_")[0] === "D"
-              )}
-              suggestions={suggestions}
-            />
-          </div>
+          <ReactTags
+            ariaDescribedBy="directors"
+            id="directors"
+            labelText="Select directors"
+            noOptionsText={noOptionsText}
+            onAdd={onAdd}
+            onDelete={onDelete}
+            onInput={onInput}
+            placeholderText="Start typing director names..."
+            selected={selected.filter(
+              (item) => item.value.split("_")[0] === "D"
+            )}
+            suggestions={suggestions}
+          />
+
           <Button
             fullWidth
             color="primary"
@@ -257,22 +255,21 @@ export default function SearchAutocomplete() {
 
       {type === "T" && !reviewMode && (
         <>
-          <div className="h-full">
-            <ReactTags
-              ariaDescribedBy="tv shows"
-              id="tv shows"
-              labelText="Select TV Shows"
-              noOptionsText={noTVOptionsText}
-              onAdd={onAdd}
-              onDelete={onDelete}
-              onInput={onInput}
-              placeholderText="Start typing TV show names..."
-              selected={selected.filter(
-                (item) => item.value.split("_")[0] === "T"
-              )}
-              suggestions={suggestions}
-            />
-          </div>
+          <ReactTags
+            ariaDescribedBy="tv shows"
+            id="tv shows"
+            labelText="Select TV Shows"
+            noOptionsText={noTVOptionsText}
+            onAdd={onAdd}
+            onDelete={onDelete}
+            onInput={onInput}
+            placeholderText="Start typing TV show names..."
+            selected={selected.filter(
+              (item) => item.value.split("_")[0] === "T"
+            )}
+            suggestions={suggestions}
+          />
+
           <Button
             fullWidth
             color="primary"
