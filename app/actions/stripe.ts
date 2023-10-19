@@ -9,7 +9,7 @@ import { stripe } from "@/lib/stripe";
 
 import { currentUser } from "@clerk/nextjs";
 
-export async function createCheckoutSession(data: FormData): Promise<void> {
+export async function createCheckoutSession(): Promise<void> {
   const user = await currentUser();
 
   const checkoutSession: Stripe.Checkout.Session =
@@ -26,7 +26,7 @@ export async function createCheckoutSession(data: FormData): Promise<void> {
       success_url: `${headers().get(
         "origin"
       )}/checkout/result?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${headers().get("origin")}/checkout`,
+      cancel_url: `${headers().get("origin")}/checkout/result?cancelled=true`,
     });
 
   redirect(checkoutSession.url as string);

@@ -35,7 +35,7 @@ export default function Navigation({ user }: NavigationProps) {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
+        {/* <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link
             href="/#features"
             className="text-sm font-semibold leading-6 text-gray-900"
@@ -54,7 +54,7 @@ export default function Navigation({ user }: NavigationProps) {
           >
             Pricing
           </Link>
-        </Popover.Group>
+        </Popover.Group> */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <SignedIn>
             <UserAvatar user={user} />
@@ -88,7 +88,7 @@ export default function Navigation({ user }: NavigationProps) {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Link
+                {/* <Link
                   href="/#features"
                   onClick={() => setMobileMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -108,7 +108,7 @@ export default function Navigation({ user }: NavigationProps) {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Pricing
-                </Link>
+                </Link> */}
               </div>
               <div className="py-6">
                 <SignedIn>

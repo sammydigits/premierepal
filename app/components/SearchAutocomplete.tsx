@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 function prepareImage(image: string) {
   if (image) {
-    return image.replace("/", "");
+    return image.replace(/[/]|.jpg/g, "");
   }
   return "";
 }
@@ -78,37 +78,42 @@ export default function SearchAutocomplete() {
   const [reviewMode, setReviewMode] = useState(false);
   const [selected, setSelected] = useState([
     {
-      value: "A_zmvK1jJ6UZpAAeMMgdEOWir0kQN.jpg_1245",
+      value: "A_zmvK1jJ6UZpAAeMMgdEOWir0kQN_1245",
       label: "Scarlett Johansson",
     },
     {
-      value: "A_jj2Gcobpopokal0YstuCQW0ldJ4.jpg_5292",
+      value: "A_jj2Gcobpopokal0YstuCQW0ldJ4_5292",
       label: "Denzel Washington",
     },
     {
-      value: "A_wo2hJpn04vbtmh0B9utCFdsQhxM.jpg_6193",
+      value: "A_wo2hJpn04vbtmh0B9utCFdsQhxM_6193",
       label: "Leonardo DiCaprio",
     },
     {
-      value: "D_1gjcpAa99FAOWGnrUvHEXXsRs7o.jpg_1245",
+      value: "D_1gjcpAa99FAOWGnrUvHEXXsRs7o_1245",
       label: "Quentin Tarantino",
     },
-    { value: "T_l220jMmURQUTzgkFuf6u8YpYs84.jpg_1245", label: "Lupin" },
     {
-      value: "T_p0AtD0ivSlHq2MHY6JFgyhNqAQY.jpg_124834",
-      label: "Heartstopper",
+      value: "D_9U9Y5GQuWX3EZy39B8nkk4NY01S_1032",
+      label: "Martin Scorsese",
+    },
+    { value: "T_l220jMmURQUTzgkFuf6u8YpYs84_1245", label: "Lupin" },
+    {
+      value: "T_iorStu3DHuscNfQiIyQomvMyO0h_97084",
+      label: "Dave",
     },
   ]);
   const [suggestions, setSuggestions] = useState([]);
 
-  //   const router = useRouter();
+  const router = useRouter();
 
   // function to save selections and redirect to /sign-up
-  //   const handleSaveSelections = () => {
-  //     console.log("Saving selections...");
-  //     //redirect to /sign-up
-  //     router.push("/notifications");
-  //   };
+  const handleSaveSelections = () => {
+    console.log("Saving selections...");
+    //redirect to /sign-up
+    // router.push("/checkout");
+    router.push("sign-up?redirect_url=%2Fcheckout");
+  };
 
   const handleSetReviewMode = () => {
     setReviewMode(true);
@@ -182,19 +187,21 @@ export default function SearchAutocomplete() {
   return (
     <>
       {!reviewMode && (
-        <Tabs
-          fullWidth
-          size="lg"
-          aria-label="Tabs form"
-          selectedKey={type}
-          onSelectionChange={(type) => handleTypeChange(type)}
-          color="default"
-          className="mb-5"
-        >
-          <Tab key="A" title="Actors" />
-          <Tab key="D" title="Directors" />
-          <Tab key="T" title="TV Shows" />
-        </Tabs>
+        <>
+          <Tabs
+            fullWidth
+            size="lg"
+            aria-label="Tabs form"
+            selectedKey={type}
+            onSelectionChange={(type) => handleTypeChange(type)}
+            color="default"
+            className="mb-5"
+          >
+            <Tab key="A" title="Actors" />
+            <Tab key="D" title="Directors" />
+            <Tab key="T" title="TV Shows" />
+          </Tabs>
+        </>
       )}
 
       {type === "A" && !reviewMode && (
@@ -282,13 +289,13 @@ export default function SearchAutocomplete() {
       )}
       {reviewMode && (
         <>
-          <p className="text-base font-semibold leading-7 text-indigo-600 text-center">
-            Get notified about your selection for $0.99/month
+          <p className="text-base font-semibold leading-6 text-indigo-600 text-center">
+            Get notified about this selection for $0.99/month
           </p>
-          <p className="text-gray-400 text-center">
-            Add more any time for no extra cost
+          <p className="text-gray-400 text-center text-sm">
+            Add more at any time for no extra cost
           </p>
-          <div className="overflow-scroll h-full">
+          <div className="overflow-scroll h-52">
             <ul className="user-selections mt-5">
               {selected.map((item) => {
                 const image = item.value.split("_")[1];
@@ -297,7 +304,7 @@ export default function SearchAutocomplete() {
                     <User
                       name={item.label}
                       avatarProps={{
-                        src: `https://image.tmdb.org/t/p/w45/${image}`,
+                        src: `https://image.tmdb.org/t/p/w45/${image}.jpg`,
                       }}
                     />
                   </li>
@@ -309,9 +316,9 @@ export default function SearchAutocomplete() {
             fullWidth
             color="primary"
             className="flex-none mt-5 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            onClick={handleSetReviewMode}
+            onClick={handleSaveSelections}
           >
-            Sign up
+            Sign up and pay
           </Button>
         </>
       )}

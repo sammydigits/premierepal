@@ -36,7 +36,7 @@ export default function UserAvatar({ user }: UserAvatarProps) {
             <Link href="/account">My Account</Link>
           </DropdownItem>
           <DropdownItem key="notifications">
-            <Link href="/notifications">Notifications</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </DropdownItem>
           <DropdownItem key="analytics">
             <Link href="/billing">Billing</Link>
