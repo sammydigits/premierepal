@@ -4,6 +4,7 @@ import React, { useCallback, useState } from "react";
 import { ReactTags } from "react-tag-autocomplete";
 import { Tabs, Tab, Button, User } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import { useCookies } from "react-cookie";
 
 function prepareImage(image: string) {
   if (image) {
@@ -72,6 +73,7 @@ async function fetchData(
 }
 
 export default function SearchAutocomplete() {
+  const [cookies, setCookie] = useCookies(["ppData"]);
   const [isBusy, setIsBusy] = useState(false);
   const [type, setType] = useState("A");
   const [personOrTV, setPersonOrTV] = useState("person");
@@ -109,7 +111,9 @@ export default function SearchAutocomplete() {
 
   // function to save selections and redirect to /sign-up
   const handleSaveSelections = () => {
-    console.log("Saving selections...");
+    console.log("Saving selections...", selected);
+    //set cookie
+    setCookie("ppData", JSON.stringify(selected));
     //redirect to /sign-up
     // router.push("/checkout");
     router.push("sign-up?redirect_url=%2Fcheckout");

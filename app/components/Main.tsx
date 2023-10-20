@@ -14,6 +14,9 @@ export default function Main() {
               we'll send you a notifcation when your favorite actor or director
               makes a new movie, or your favorite TV show gets a new season.
             </p>
+            <p className="mt-6 text-sm font-semibold leading-6 text-gray-900 text-center">
+              Start typing names <span aria-hidden="true">→</span>
+            </p>
           </div>
           <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
             <div className="rounded-2xl bg-gray-50 py-10 ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-8">
