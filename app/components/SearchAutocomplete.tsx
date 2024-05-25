@@ -35,7 +35,7 @@ async function fetchData(
   try {
     const query = encodeURIComponent(value);
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/${personOrTV}?query=${query}&include_adult=false&language=en-US&page=1&api_key=46a294decd2cace870667ba55dff0d0f`
+      `https://api.themoviedb.org/3/search/${personOrTV}?query=${query}&include_adult=false&language=en-US&page=1&api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     );
 
     if (response.ok) {
